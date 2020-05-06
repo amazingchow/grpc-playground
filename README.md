@@ -1,2 +1,7 @@
 # dig-the-grpc
-learn grpc the hard way
+
+### Reference
+
+* [grpc](https://grpc.io/)
+* [grpc-go-pool](https://github.com/processout/grpc-go-pool)
+* [pooling grpc connections](https://mycodesmells.com/post/pooling-grpc-connections)
