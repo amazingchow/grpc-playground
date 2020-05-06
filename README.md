@@ -2,6 +2,13 @@
 
 ## Benchtest
 
+testing environment
+
+* os        : ubuntu 16.04 LTS 64-bit
+* processor : Intel® Core™ i7-8700 CPU @ 3.20GHz × 12 
+* memory    : Kingston KHX2400C15/8G 2400 MHz DDR4 × 2
+* graphics  : GeForce GTX 1060 6GB/PCIe/SSE2
+
 > ONE-CONNECTION-PER-REQUEST test case
 
 ```bash
