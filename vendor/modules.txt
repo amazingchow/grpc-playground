@@ -64,7 +64,7 @@ google.golang.org/grpc/binarylog/grpc_binarylog_v1
 google.golang.org/grpc/internal/syscall
 google.golang.org/grpc/attributes
 google.golang.org/grpc/internal/status
-# google.golang.org/grpc/examples v0.0.0-20200504170109-c8482678eb49
+# google.golang.org/grpc/examples v0.0.0-20200513180321-36493bc37524
 google.golang.org/grpc/examples/helloworld/helloworld
 # google.golang.org/protobuf v1.21.0
 google.golang.org/protobuf/encoding/prototext
