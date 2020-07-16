@@ -72,7 +72,7 @@ func uploadAction(ctx *cli.Context) (err error) {
 		panic(err)
 	}
 
-	fmt.Printf("used %.2f secs to upload '%s'\n", stat.FinishedAt.Sub(stat.StartedAt).Seconds(), file)
+	fmt.Printf("used %.2f secs to upload '%s', while chunk size = %d\n", stat.FinishedAt.Sub(stat.StartedAt).Seconds(), file, chunkSize)
 
 	return
 }

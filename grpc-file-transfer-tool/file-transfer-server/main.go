@@ -9,8 +9,8 @@ import (
 
 var (
 	_Port = flag.Int("port", 8999, "server port")
-	_Cert = flag.String("cert", "cert/cert.pem", "cert file")
-	_Key  = flag.String("key", "cert/key.pem", "private key file")
+	_Cert = flag.String("cert", "grpc-file-transfer-tool/cert/cert.pem", "cert file")
+	_Key  = flag.String("key", "grpc-file-transfer-tool/cert/key.pem", "private key file")
 )
 
 func main() {

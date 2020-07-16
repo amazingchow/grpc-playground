@@ -18,6 +18,8 @@
 /client
 /file-transfer-server
 /file-transfer-client
-/cert/cert.pem
-/cert/key.pem
-/fixtures/*.txt
+/grpc-file-transfer-tool/cert/cert.pem
+/grpc-file-transfer-tool/cert/key.pem
+/grpc-file-transfer-tool/fixtures/*.txt
+/grpc-file-transfer-tool/benchmark/*.log
+/grpc-file-transfer-tool/benchmark/venv/
