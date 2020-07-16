@@ -16,3 +16,8 @@
 
 /server
 /client
+/file-transfer-server
+/file-transfer-client
+/cert/cert.pem
+/cert/key.pem
+/fixtures/*.txt

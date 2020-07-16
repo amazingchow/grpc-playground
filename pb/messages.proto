@@ -1,0 +1,23 @@
+syntax = "proto3";
+
+option go_package = "github.com/amazingchow/dig-the-grpc/api";
+package amazingchow.dig_the_grpc;
+
+message FileChunk {
+  bytes Content = 1;
+}
+
+enum UploadStatusCode {
+  STATUS_CODE_UNKNOWN = 0;
+  STATUS_CODE_OK = 1;
+  STATUS_CODE_FAILED = 2;
+}
+
+message UploadStatus {
+  string Message = 1;
+  UploadStatusCode Code = 2;
+}
+
+service GrpcStreamService {
+  rpc Upload(stream FileChunk) returns (UploadStatus) {}
+}
