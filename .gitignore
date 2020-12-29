@@ -14,8 +14,8 @@
 # Dependency directories (remove the comment below to include it)
 # vendor/
 
-/server
-/client
+/simple-proxy
+/simple-server
 /file-transfer-server
 /file-transfer-client
 /grpc-file-transfer-tool/cert/cert.pem
