@@ -8,18 +8,18 @@ import (
 )
 
 var (
-	_Port = flag.Int("port", 8999, "server port")
-	_Cert = flag.String("cert", "grpc-file-transfer-tool/cert/cert.pem", "cert file")
-	_Key  = flag.String("key", "grpc-file-transfer-tool/cert/key.pem", "private key file")
+	portFlag     = flag.Int("port", 8999, "server port")
+	certFileFlag = flag.String("cert", "grpc-file-transfer-tool/cert/cert.pem", "cert file")
+	keyFileFlag  = flag.String("key", "grpc-file-transfer-tool/cert/key.pem", "private key file")
 )
 
 func main() {
 	flag.Parse()
 
 	cfg := &GrpcStreamServerCfg{
-		Port: *_Port,
-		Cert: *_Cert,
-		Key:  *_Key,
+		Port: *portFlag,
+		Cert: *certFileFlag,
+		Key:  *keyFileFlag,
 	}
 
 	srv, err := NewGrpcStreamServer(cfg)

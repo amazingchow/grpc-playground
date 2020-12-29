@@ -12,16 +12,16 @@ import (
 	"google.golang.org/grpc/credentials"
 	_ "google.golang.org/grpc/encoding/gzip"
 
-	"github.com/amazingchow/dig-the-grpc/api"
-	"github.com/amazingchow/dig-the-grpc/internal/common"
+	"github.com/amazingchow/photon-dance-grpc-examples/grpc-file-transfer-tool/api"
+	"github.com/amazingchow/photon-dance-grpc-examples/grpc-file-transfer-tool/common"
 )
 
 // GRPCStreamClient gRPC流客户端
 type GRPCStreamClient struct {
 	logger zerolog.Logger
+	cfg    *GRPCStreamClientCfg
 	client api.GrpcStreamServiceClient
 	conn   *grpc.ClientConn
-	cfg    *GRPCStreamClientCfg
 }
 
 // GRPCStreamClientCfg gRPC流客户端配置
@@ -35,15 +35,14 @@ type GRPCStreamClientCfg struct {
 // NewGRPCStreamClient 返回GRPCStreamClient实例.
 func NewGRPCStreamClient(cfg *GRPCStreamClientCfg) (*GRPCStreamClient, error) {
 	var (
-		opts  = []grpc.DialOption{}
-		creds credentials.TransportCredentials
-		err   error
+		opts = []grpc.DialOption{}
+		err  error
 	)
 
 	if cfg.Address == "" {
 		return nil, errors.Errorf("address must be specified")
 	}
-	if cfg.ChunkSize == 0 {
+	if cfg.ChunkSize <= 0 {
 		return nil, errors.Errorf("chunk_size must be specified")
 	} else if cfg.ChunkSize > (1 << 22) {
 		return nil, errors.Errorf("chunk_size must be less than 4MB")
@@ -52,9 +51,9 @@ func NewGRPCStreamClient(cfg *GRPCStreamClientCfg) (*GRPCStreamClient, error) {
 		opts = append(opts, grpc.WithDefaultCallOptions(grpc.UseCompressor("gzip")))
 	}
 	if cfg.RootCert != "" {
-		creds, err = credentials.NewClientTLSFromFile(cfg.RootCert, "localhost")
+		creds, err := credentials.NewClientTLSFromFile(cfg.RootCert, "SummyChou") // change the serverNameOverride for yourself
 		if err != nil {
-			return nil, errors.Wrapf(err, "failed to create tls grpc client using root-cert '%s'", cfg.RootCert)
+			return nil, errors.Wrapf(err, "failed to create tls-grpc-client using root-cert '%s'", cfg.RootCert)
 		}
 		opts = append(opts, grpc.WithTransportCredentials(creds))
 	} else {
@@ -65,7 +64,7 @@ func NewGRPCStreamClient(cfg *GRPCStreamClientCfg) (*GRPCStreamClient, error) {
 	cli.logger = zerolog.New(os.Stdout).With().Str("from", "grpc stream client").Logger()
 	cli.cfg = cfg
 	if cli.conn, err = grpc.Dial(cfg.Address, opts...); err != nil {
-		return nil, errors.Wrapf(err, "failed to create tls grpc connection with address %s", cfg.Address)
+		return nil, errors.Wrapf(err, "failed to create tls-grpc-connection with address %s", cfg.Address)
 	}
 	cli.client = api.NewGrpcStreamServiceClient(cli.conn)
 
@@ -75,46 +74,41 @@ func NewGRPCStreamClient(cfg *GRPCStreamClientCfg) (*GRPCStreamClient, error) {
 // Close 停止运行gRPC流客户端.
 func (cli *GRPCStreamClient) Close() {
 	if cli.conn != nil {
-		cli.conn.Close()
+		cli.conn.Close() // nolint
 	}
 }
 
 // UploadFile 上传文件.
 func (cli *GRPCStreamClient) UploadFile(ctx context.Context, fn string) (*common.Stats, error) {
 	var (
-		fd      *os.File
-		stream  api.GrpcStreamService_UploadClient
-		writing = true
-		buffer  []byte
-		n       int
-		status  *api.UploadStatus
-		stats   = &common.Stats{}
-		err     error
+		status *api.UploadStatus
+		stats  = &common.Stats{}
 	)
 
-	fd, err = os.Open(fn)
+	fd, err := os.Open(fn)
 	if err != nil {
 		return nil, errors.Wrapf(err, "failed to open file '%s'", fn)
 	}
 	defer fd.Close()
 
-	stream, err = cli.client.Upload(ctx)
+	stream, err := cli.client.Upload(ctx)
 	if err != nil {
 		return nil, errors.Wrapf(err, "failed to create upload stream for file %s", fn)
 	}
-	defer stream.CloseSend()
+	defer func() {
+		stream.CloseSend() // nolint
+	}()
 
-	// start to receive
+	// start to send
 	stats.StartedAt = time.Now()
 
-	buffer = make([]byte, cli.cfg.ChunkSize)
-	for writing {
-		n, err = fd.Read(buffer)
+	buffer := make([]byte, cli.cfg.ChunkSize)
+WRITE_LOOP:
+	for {
+		n, err := fd.Read(buffer)
 		if err != nil {
 			if err == io.EOF {
-				writing = false
-				err = nil
-				continue
+				break WRITE_LOOP
 			}
 			return nil, errors.Wrapf(err, "failed unexpectedly while copying from file to buffer")
 		}

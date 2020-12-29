@@ -20,7 +20,7 @@ func main() {
 			Flags: []cli.Flag{
 				&cli.StringFlag{
 					Name:  "addr",
-					Usage: "server's grpc endpoint, e.g. 127.0.0.1:8999",
+					Usage: "grpc server's endpoint, e.g. 127.0.0.1:8999",
 				},
 				&cli.IntFlag{
 					Name:  "chunk",
