@@ -2,7 +2,7 @@
 // versions:
 // 	protoc-gen-go v1.23.0
 // 	protoc        v3.12.3
-// source: github.com/amazingchow/photon-dance-grpc-examples/grpc-file-transfer-tool/pb/messages.proto
+// source: github.com/amazingchow/grpc-playground/grpc-file-transfer-tool/pb/messages.proto
 
 package api
 
@@ -425,5 +425,5 @@ var _GrpcStreamService_serviceDesc = grpc.ServiceDesc{
 			ClientStreams: true,
 		},
 	},
-	Metadata: "github.com/amazingchow/photon-dance-grpc-examples/grpc-file-transfer-tool/pb/messages.proto",
+	Metadata: "github.com/amazingchow/grpc-playground/grpc-file-transfer-tool/pb/messages.proto",
 }

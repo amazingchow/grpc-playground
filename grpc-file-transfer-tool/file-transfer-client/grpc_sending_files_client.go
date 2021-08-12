@@ -12,8 +12,8 @@ import (
 	"google.golang.org/grpc/credentials"
 	_ "google.golang.org/grpc/encoding/gzip"
 
-	"github.com/amazingchow/photon-dance-grpc-examples/grpc-file-transfer-tool/api"
-	"github.com/amazingchow/photon-dance-grpc-examples/grpc-file-transfer-tool/common"
+	"github.com/amazingchow/grpc-playground/grpc-file-transfer-tool/api"
+	"github.com/amazingchow/grpc-playground/grpc-file-transfer-tool/common"
 )
 
 // GRPCStreamClient gRPC流客户端

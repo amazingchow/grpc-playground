@@ -1,6 +1,6 @@
 syntax = "proto3";
 
-option go_package = "github.com/amazingchow/photon-dance-grpc-examples/grpc-file-transfer-tool/api";
+option go_package = "github.com/amazingchow/grpc-playground/grpc-file-transfer-tool/api";
 package amazingchow.photon_dance_grpc_examples.grpc_file_transfer_tool;
 
 message FileChunk {
