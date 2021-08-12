@@ -1,4 +1,4 @@
-PROJECT                      := github.com/amazingchow/photon-dance-grpc-examples
+PROJECT                      := github.com/amazingchow/grpc-playground
 SRC                          := $(shell find . -type f -name '*.go' -not -path "./vendor/*")
 CONNECTION_BENCHMARK_TARGETS := simple-proxy simple-server
 FILE_TRANSFER_TARGETS        := file-transfer-server file-transfer-client
@@ -13,9 +13,6 @@ $(CONNECTION_BENCHMARK_TARGETS): $(SRC)
 
 $(FILE_TRANSFER_TARGETS): $(SRC)
 	@go build $(GOMODULEPATH)/$(PROJECT)/grpc-file-transfer-tool/$@
-
-pb-fmt:
-	@clang-format -i ./pb/*.proto
 
 clean:
 	rm -f $(ALL_TARGETS)

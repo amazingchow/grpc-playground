@@ -1,14 +1,14 @@
-module github.com/amazingchow/photon-dance-grpc-examples
+module github.com/amazingchow/grpc-playground
 
-go 1.12
+go 1.15
 
 require (
-	github.com/golang/protobuf v1.4.2
+	github.com/golang/protobuf v1.5.2
 	github.com/pkg/errors v0.9.1
-	github.com/rs/zerolog v1.20.0
+	github.com/rs/zerolog v1.23.0
 	github.com/urfave/cli v1.22.5
-	golang.org/x/net v0.0.0-20201224014010-6772e930b67b
-	google.golang.org/grpc v1.34.0
-	google.golang.org/grpc/examples v0.0.0-20201226181154-53788aa5dcb4
-	google.golang.org/protobuf v1.25.0
+	golang.org/x/net v0.0.0-20210805182204-aaa1db679c0d
+	google.golang.org/grpc v1.40.0
+	google.golang.org/grpc/examples v0.0.0-20210811224824-ad87ad009856
+	google.golang.org/protobuf v1.27.1
 )

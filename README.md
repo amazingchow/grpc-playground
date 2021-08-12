@@ -1,4 +1,4 @@
-# photon-dance-grpc-examples
+# grpc-playground
 
 ## Reference
 
