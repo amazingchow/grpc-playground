@@ -14,10 +14,13 @@
 # Dependency directories (remove the comment below to include it)
 vendor/
 
-/simple-proxy
-/simple-server
 /file-transfer-server
 /file-transfer-client
+/simple-ipc-client
+/simple-ipc-server
+/simple-proxy
+/simple-server
+
 /grpc-file-transfer-tool/cert/cert.pem
 /grpc-file-transfer-tool/cert/key.pem
 /grpc-file-transfer-tool/fixtures/*.txt
