@@ -6,6 +6,7 @@ import (
 	"fmt"
 	"log"
 	"net"
+	"syscall"
 	"time"
 
 	"google.golang.org/grpc"
@@ -31,9 +32,14 @@ func (srv *server) SayHello(ctx context.Context, req *pb.HelloRequest) (*pb.Hell
 func main() {
 	flag.Parse()
 
-	addr, err := net.ResolveUnixAddr("unix", "/run/grpc-conn-ipc-example.sock")
+	addr, err := net.ResolveUnixAddr("unix", "/var/run/grpc-conn-ipc-example.sock")
 	if err != nil {
 		log.Fatalf("failed to resolve unix addr, err: %v", err)
+	}
+	// always remove the named socket if its there
+	err = syscall.Unlink("/var/run/grpc-conn-ipc-example.sock")
+	if err != nil {
+		log.Fatalf("failed to remove the named socket, err: %v", err)
 	}
 	l, err := net.ListenUnix("unix", addr)
 	if err != nil {

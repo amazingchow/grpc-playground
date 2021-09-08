@@ -3,29 +3,14 @@ package main
 import (
 	"context"
 	"log"
-	"net"
 	"time"
 
 	"google.golang.org/grpc"
 	pb "google.golang.org/grpc/examples/helloworld/helloworld"
 )
 
-func UnixConnect(context.Context, string) (net.Conn, error) {
-	addr, err := net.ResolveUnixAddr("unix", "/run/grpc-conn-ipc-example.sock")
-	if err != nil {
-		log.Printf("failed to resolve unix addr, err: %v\n", err)
-		return nil, err
-	}
-	conn, err := net.DialUnix("unix", nil, addr)
-	if err != nil {
-		log.Printf("failed to dial unix, err: %v\n", err)
-		return nil, err
-	}
-	return conn, nil
-}
-
 func main() {
-	conn, err := grpc.Dial("/run/grpc-conn-ipc-example.sock", grpc.WithInsecure(), grpc.WithContextDialer(UnixConnect))
+	conn, err := grpc.Dial("unix:///var/run/grpc-conn-ipc-example.sock", grpc.WithInsecure())
 	if err != nil {
 		log.Fatalf("failed to connect, err: %v", err)
 	}
